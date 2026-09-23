@@ -1,0 +1,134 @@
+{
+  "updated_at": "2026-09-23T12:15:10.035169",
+  "next_race": {
+    "race_name": "Azerbaijan Grand Prix",
+    "circuit": "Baku City Circuit",
+    "country": "Azerbaijan",
+    "race_datetime_utc": "2026-09-26T11:00:00Z",
+    "fp1": "2026-09-24T08:30:00Z",
+    "fp2": "2026-09-24T12:00:00Z",
+    "fp3": "2026-09-25T08:30:00Z",
+    "qualifying": "2026-09-25T12:00:00Z",
+    "sprint": null
+  },
+  "last_race_results": {
+    "race_name": "Spanish Grand Prix",
+    "circuit": "Madring",
+    "date": "2026-09-13",
+    "datetime_utc": "2026-09-13T13:00:00Z",
+    "top10": [
+      {
+        "pos": "1",
+        "driver": "Andrea Kimi Antonelli",
+        "constructor": "Mercedes",
+        "time": "1:34:23.754",
+        "points": "25"
+      },
+      {
+        "pos": "2",
+        "driver": "Max Verstappen",
+        "constructor": "Red Bull",
+        "time": "+4.351",
+        "points": "18"
+      },
+      {
+        "pos": "3",
+        "driver": "Lando Norris",
+        "constructor": "McLaren",
+        "time": "+5.089",
+        "points": "15"
+      },
+      {
+        "pos": "4",
+        "driver": "Charles Leclerc",
+        "constructor": "Ferrari",
+        "time": "+29.116",
+        "points": "12"
+      },
+      {
+        "pos": "5",
+        "driver": "George Russell",
+        "constructor": "Mercedes",
+        "time": "+29.829",
+        "points": "10"
+      },
+      {
+        "pos": "6",
+        "driver": "Liam Lawson",
+        "constructor": "Red Bull",
+        "time": "+1:26.746",
+        "points": "8"
+      },
+      {
+        "pos": "7",
+        "driver": "Franco Colapinto",
+        "constructor": "Alpine F1 Team",
+        "time": "+1:34.281",
+        "points": "6"
+      },
+      {
+        "pos": "8",
+        "driver": "Oscar Piastri",
+        "constructor": "McLaren",
+        "time": "+1:35.839",
+        "points": "4"
+      },
+      {
+        "pos": "9",
+        "driver": "Arvid Lindblad",
+        "constructor": "RB F1 Team",
+        "time": "+10.408",
+        "points": "2"
+      },
+      {
+        "pos": "10",
+        "driver": "Nico Hülkenberg",
+        "constructor": "Audi",
+        "time": "+11.298",
+        "points": "1"
+      }
+    ]
+  },
+  "last_quali_results": {
+    "race_name": "Spanish Grand Prix",
+    "date": "2026-09-13",
+    "top5": [
+      {
+        "pos": "1",
+        "driver": "Lando Norris",
+        "constructor": "McLaren",
+        "time": "1:31.824"
+      },
+      {
+        "pos": "2",
+        "driver": "Andrea Kimi Antonelli",
+        "constructor": "Mercedes",
+        "time": "1:31.835"
+      },
+      {
+        "pos": "3",
+        "driver": "Max Verstappen",
+        "constructor": "Red Bull",
+        "time": "1:31.964"
+      },
+      {
+        "pos": "4",
+        "driver": "Lewis Hamilton",
+        "constructor": "Ferrari",
+        "time": "1:32.013"
+      },
+      {
+        "pos": "5",
+        "driver": "Charles Leclerc",
+        "constructor": "Ferrari",
+        "time": "1:32.019"
+      }
+    ]
+  },
+  "streams": {
+    "ORF": "https://orf1.mdn.ors.at/out/u/orf1/q8c/manifest.m3u8",
+    "ServusTV": "https://rbmn-live.akamaized.net/hls/live/2002825/geoSTVATweb/master.m3u8",
+    "Viaplay": "https://live-fi.tvkaista.net/viaplay-tv/live.m3u8?src=freetv",
+    "SuperTennis": "https://live-embed.supertennix.hiway.media/restreamer/supertennix_client/gpu-a-c0-16/restreamer/outgest/aa3673f1-e178-44a9-a947-ef41db73211a/manifest.m3u8"
+  }
+}
