@@ -26,6 +26,7 @@ def get_next_f1_race():
     try:
         data = fetch_json(url)
         race = data["MRData"]["RaceTable"]["Races"][0]
+        round_no = race.get("round", "15")
         name = race.get("raceName", "Grand Prix")
         circuit = race.get("Circuit", {}).get("circuitName", "Circuit")
         country = race.get("Circuit", {}).get("Location", {}).get("country", "")
@@ -48,6 +49,7 @@ def get_next_f1_race():
         sprint_t = race.get("Sprint", {}).get("time", "13:00:00Z") if "Sprint" in race else None
 
         return {
+            "round": round_no,
             "race_name": name,
             "circuit": circuit,
             "country": country,
@@ -61,6 +63,7 @@ def get_next_f1_race():
     except Exception as e:
         print(f"[WARN] Błąd pobierania next race: {e}")
         return {
+            "round": "15",
             "race_name": "Azerbaijan Grand Prix",
             "circuit": "Baku City Circuit",
             "country": "Azerbaijan",
@@ -106,34 +109,63 @@ def get_last_race_results():
         print(f"[WARN] Błąd pobierania last race results: {e}")
         return None
 
-def get_last_quali_results():
-    url = "https://api.jolpi.ca/ergast/f1/current/last/qualifying.json"
-    try:
-        data = fetch_json(url)
-        race = data["MRData"]["RaceTable"]["Races"][0]
-        r_name = race.get("raceName", "Grand Prix")
-        r_date = race.get("date", "")
-        
-        top5 = []
-        for res in race.get("QualifyingResults", [])[:5]:
-            d_name = f"{res['Driver'].get('givenName', '')} {res['Driver'].get('familyName', '')}".strip()
-            c_name = res.get("Constructor", {}).get("name", "F1 Team")
-            q_time = res.get("Q3") or res.get("Q2") or res.get("Q1") or "-"
-            top5.append({
-                "pos": res.get("position", "1"),
-                "driver": d_name,
-                "constructor": c_name,
-                "time": q_time
-            })
+def get_last_quali_results(current_round=None):
+    race = None
+    is_current_weekend = False
 
-        return {
-            "race_name": r_name,
-            "date": r_date,
-            "top5": top5
-        }
-    except Exception as e:
-        print(f"[WARN] Błąd pobierania last qualifying: {e}")
+    # 1. Sprawdź najpierw kwalifikacje dla bieżącej rundy (np. Baku Q3)
+    if current_round:
+        try:
+            curr_url = f"https://api.jolpi.ca/ergast/f1/current/{current_round}/qualifying.json"
+            curr_data = fetch_json(curr_url)
+            races = curr_data.get("MRData", {}).get("RaceTable", {}).get("Races", [])
+            if races and races[0].get("QualifyingResults"):
+                race = races[0]
+                is_current_weekend = True
+                print(f"[INFO] Znaleziono świeże wyniki kwalifikacji bieżącego GP ({race.get('raceName')}, Runda {current_round}).")
+        except Exception as e:
+            print(f"[WARN] Błąd sprawdzania bieżących kwalifikacji rundy {current_round}: {e}")
+
+    # 2. Fallback na /current/last/qualifying.json jeśli bieżąca runda jeszcze nie miała kwalifikacji
+    if not race:
+        url = "https://api.jolpi.ca/ergast/f1/current/last/qualifying.json"
+        try:
+            data = fetch_json(url)
+            races = data.get("MRData", {}).get("RaceTable", {}).get("Races", [])
+            if races:
+                race = races[0]
+        except Exception as e:
+            print(f"[WARN] Błąd pobierania last qualifying: {e}")
+            return None
+
+    if not race:
         return None
+
+    r_name = race.get("raceName", "Grand Prix")
+    r_round = race.get("round", "")
+    r_date = race.get("date", "")
+    
+    # Rozszerzone TOP 10 (pełna stawka Q3)
+    top10 = []
+    for res in race.get("QualifyingResults", [])[:10]:
+        d_name = f"{res['Driver'].get('givenName', '')} {res['Driver'].get('familyName', '')}".strip()
+        c_name = res.get("Constructor", {}).get("name", "F1 Team")
+        q_time = res.get("Q3") or res.get("Q2") or res.get("Q1") or "-"
+        top10.append({
+            "pos": res.get("position", "1"),
+            "driver": d_name,
+            "constructor": c_name,
+            "time": q_time
+        })
+
+    return {
+        "race_name": r_name,
+        "round": r_round,
+        "date": r_date,
+        "is_current_weekend": is_current_weekend,
+        "top10": top10,
+        "top5": top10[:5]
+    }
 
 def find_iptv_streams():
     keywords = ["Sky Sports F1", "Viaplay", "ServusTV", "ORF", "SuperTennis"]
@@ -169,8 +201,9 @@ def find_iptv_streams():
 def run():
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 🏎️ Pobieram dane F1 i streamy...")
     next_race = get_next_f1_race()
+    curr_round = next_race.get("round") if next_race else None
     last_race = get_last_race_results()
-    last_quali = get_last_quali_results()
+    last_quali = get_last_quali_results(current_round=curr_round)
     streams = find_iptv_streams()
 
     payload = {
@@ -185,7 +218,9 @@ def run():
         json.dump(payload, f, indent=2, ensure_ascii=False)
 
     top10_count = len(last_race.get("top10", [])) if last_race else 0
-    print(f"✅ Zapisano F1 status: Nadchodzący {next_race['race_name']} | Poprzedni TOP 10 ({top10_count} kierowców) | Streamy: {len(streams)}")
+    quali_count = len(last_quali.get("top10", [])) if last_quali else 0
+    weekend_tag = "BIEŻĄCY WEEKEND (LIVE Q3)" if (last_quali and last_quali.get("is_current_weekend")) else "POPRZEDNIE GP"
+    print(f"✅ Zapisano F1 status: Nadchodzący {next_race['race_name']} | Kwalifikacje [{weekend_tag}] ({quali_count} kierowców) | Streamy: {len(streams)}")
 
 if __name__ == "__main__":
     run()

@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-09-23T12:15:10.035169",
+  "updated_at": "2026-09-25T17:12:27.727674",
   "next_race": {
+    "round": "15",
     "race_name": "Azerbaijan Grand Prix",
     "circuit": "Baku City Circuit",
     "country": "Azerbaijan",
@@ -90,38 +91,102 @@
     ]
   },
   "last_quali_results": {
-    "race_name": "Spanish Grand Prix",
-    "date": "2026-09-13",
-    "top5": [
+    "race_name": "Azerbaijan Grand Prix",
+    "round": "15",
+    "date": "2026-09-26",
+    "is_current_weekend": true,
+    "top10": [
       {
         "pos": "1",
-        "driver": "Lando Norris",
-        "constructor": "McLaren",
-        "time": "1:31.824"
+        "driver": "George Russell",
+        "constructor": "Mercedes",
+        "time": "1:42.526"
       },
       {
         "pos": "2",
-        "driver": "Andrea Kimi Antonelli",
-        "constructor": "Mercedes",
-        "time": "1:31.835"
+        "driver": "Charles Leclerc",
+        "constructor": "Ferrari",
+        "time": "1:43.363"
       },
       {
         "pos": "3",
-        "driver": "Max Verstappen",
-        "constructor": "Red Bull",
-        "time": "1:31.964"
+        "driver": "Oscar Piastri",
+        "constructor": "McLaren",
+        "time": "1:43.364"
       },
       {
         "pos": "4",
-        "driver": "Lewis Hamilton",
-        "constructor": "Ferrari",
-        "time": "1:32.013"
+        "driver": "Isack Hadjar",
+        "constructor": "Red Bull",
+        "time": "1:43.500"
       },
       {
         "pos": "5",
+        "driver": "Lando Norris",
+        "constructor": "McLaren",
+        "time": "1:43.672"
+      },
+      {
+        "pos": "6",
+        "driver": "Lewis Hamilton",
+        "constructor": "Ferrari",
+        "time": "1:43.858"
+      },
+      {
+        "pos": "7",
+        "driver": "Pierre Gasly",
+        "constructor": "Alpine F1 Team",
+        "time": "1:44.047"
+      },
+      {
+        "pos": "8",
+        "driver": "Max Verstappen",
+        "constructor": "Red Bull",
+        "time": "1:44.081"
+      },
+      {
+        "pos": "9",
+        "driver": "Carlos Sainz",
+        "constructor": "Williams",
+        "time": "1:44.566"
+      },
+      {
+        "pos": "10",
+        "driver": "Franco Colapinto",
+        "constructor": "Alpine F1 Team",
+        "time": "1:44.963"
+      }
+    ],
+    "top5": [
+      {
+        "pos": "1",
+        "driver": "George Russell",
+        "constructor": "Mercedes",
+        "time": "1:42.526"
+      },
+      {
+        "pos": "2",
         "driver": "Charles Leclerc",
         "constructor": "Ferrari",
-        "time": "1:32.019"
+        "time": "1:43.363"
+      },
+      {
+        "pos": "3",
+        "driver": "Oscar Piastri",
+        "constructor": "McLaren",
+        "time": "1:43.364"
+      },
+      {
+        "pos": "4",
+        "driver": "Isack Hadjar",
+        "constructor": "Red Bull",
+        "time": "1:43.500"
+      },
+      {
+        "pos": "5",
+        "driver": "Lando Norris",
+        "constructor": "McLaren",
+        "time": "1:43.672"
       }
     ]
   },
