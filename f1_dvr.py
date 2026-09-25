@@ -86,14 +86,10 @@ def test_stream_alive(url: str, timeout: int = 5) -> bool:
         return False
 
 def record_stream(url: str, output_path: str, duration_sec: int) -> bool:
-    """Executes ffmpeg in stream copy mode with auto-reconnect."""
+    """Executes ffmpeg in stream copy mode for HLS live streams."""
     cmd = [
         "ffmpeg",
-        "-reconnect", "1",
-        "-reconnect_at_eof", "1",
-        "-reconnect_streamed", "1",
-        "-reconnect_delay_max", "5",
-        "-headers", "User-Agent: Mozilla/5.0\r\n",
+        "-user_agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
         "-i", url,
         "-c", "copy",
         "-bsf:a", "aac_adtstoasc",
@@ -103,10 +99,8 @@ def record_stream(url: str, output_path: str, duration_sec: int) -> bool:
     ]
     print(f"[{datetime.now().strftime('%H:%M:%S')}] Odpalam ffmpeg dla {duration_sec}s...")
     try:
-        proc = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, timeout=duration_sec + 45)
-        if os.path.exists(output_path) and os.path.getsize(output_path) > 100 * 1024:
-            return True
-        return proc.returncode == 0
+        proc = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, timeout=duration_sec + 30)
+        return os.path.exists(output_path) and os.path.getsize(output_path) > 100 * 1024
     except subprocess.TimeoutExpired:
         print("[INFO] Nagrywanie zakończone po upływie zaplanowanego czasu.")
         return os.path.exists(output_path) and os.path.getsize(output_path) > 100 * 1024
